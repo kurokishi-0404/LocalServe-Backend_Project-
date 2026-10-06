@@ -1,0 +1,584 @@
+{
+  "info": {
+    "_postman_id": "7b55f884-a129-4d6b-b230-1b203c9b4e11",
+    "name": "LocalServe Backend API Collection",
+    "description": "Comprehensive Postman collection for LocalServe B.Tech CSE Viva project. Includes customer, provider, admin, booking, payment, review, chat, geolocation, and notification flows.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Register Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.environment.set('customerToken', res.token);",
+                  "    pm.environment.set('customerId', res.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Customer\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"9876543210\",\n  \"role\": \"customer\",\n  \"location\": \"Mumbai\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.environment.set('customerToken', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Register Provider",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.environment.set('providerToken', res.token);",
+                  "    pm.environment.set('providerId', res.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bob Electrician\",\n  \"email\": \"bob@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"9123456789\",\n  \"role\": \"provider\",\n  \"location\": \"Andheri, Mumbai\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login Provider",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.environment.set('providerToken', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bob@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Register Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.environment.set('adminToken', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"9000000000\",\n  \"role\": \"admin\",\n  \"location\": \"Headquarters\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Get User Profile (Protected - JWT)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/users/profile", "host": ["{{baseUrl}}"], "path": ["api", "users", "profile"] }
+          }
+        },
+        {
+          "name": "Get Firebase User Profile (Firebase Auth)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{firebaseIdToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/auth/firebase-profile", "host": ["{{baseUrl}}"], "path": ["api", "auth", "firebase-profile"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Services",
+      "item": [
+        {
+          "name": "Create Service (Provider Only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.data && res.data._id) {",
+                  "    pm.environment.set('serviceId', res.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{providerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Home Electrical Wiring & Repairs\",\n  \"description\": \"Comprehensive electrical inspection, wiring, short circuit fixes, and appliance installation.\",\n  \"category\": \"Electrical\",\n  \"price\": 499,\n  \"availability\": \"Mon-Sat 9AM-8PM\",\n  \"location\": \"Andheri East, Mumbai\",\n  \"latitude\": 19.1136,\n  \"longitude\": 72.8697\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/services", "host": ["{{baseUrl}}"], "path": ["api", "services"] }
+          }
+        },
+        {
+          "name": "Get All Services (Public)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/services?category=Electrical", "host": ["{{baseUrl}}"], "path": ["api", "services"], "query": [{ "key": "category", "value": "Electrical" }] }
+          }
+        },
+        {
+          "name": "Get Service by ID (Public)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/services/{{serviceId}}", "host": ["{{baseUrl}}"], "path": ["api", "services", "{{serviceId}}"] }
+          }
+        },
+        {
+          "name": "Update Service (Owner Provider / Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{providerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 550,\n  \"availability\": \"Mon-Sun 8AM-9PM\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/services/{{serviceId}}", "host": ["{{baseUrl}}"], "path": ["api", "services", "{{serviceId}}"] }
+          }
+        },
+        {
+          "name": "Delete Service (Owner Provider / Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{providerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/services/{{serviceId}}", "host": ["{{baseUrl}}"], "path": ["api", "services", "{{serviceId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Providers",
+      "item": [
+        {
+          "name": "Get Providers (Public)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/providers", "host": ["{{baseUrl}}"], "path": ["api", "providers"] }
+          }
+        },
+        {
+          "name": "Get Provider by ID (Public)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/providers/{{providerId}}", "host": ["{{baseUrl}}"], "path": ["api", "providers", "{{providerId}}"] }
+          }
+        },
+        {
+          "name": "Update Provider Profile (Owner / Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{providerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bio\": \"Certified technician with 10+ years of residential and commercial experience.\",\n  \"serviceCategories\": [\"Electrical\", \"Appliances\"],\n  \"phone\": \"9123456780\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/providers/{{providerId}}", "host": ["{{baseUrl}}"], "path": ["api", "providers", "{{providerId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Bookings",
+      "item": [
+        {
+          "name": "Create Booking (Customer Only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.data && res.data._id) {",
+                  "    pm.environment.set('bookingId', res.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceId\": \"{{serviceId}}\",\n  \"bookingDate\": \"2026-10-15T10:00:00.000Z\",\n  \"address\": \"Apt 4B, Blue Horizon, Linking Road, Bandra West, Mumbai\",\n  \"notes\": \"Main breaker trip issue in kitchen\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/bookings", "host": ["{{baseUrl}}"], "path": ["api", "bookings"] }
+          }
+        },
+        {
+          "name": "Get Bookings (Role Filtered)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/bookings", "host": ["{{baseUrl}}"], "path": ["api", "bookings"] }
+          }
+        },
+        {
+          "name": "Get Booking by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/bookings/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["api", "bookings", "{{bookingId}}"] }
+          }
+        },
+        {
+          "name": "Update Booking Status (Provider/Customer/Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{providerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"confirmed\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/bookings/{{bookingId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "bookings", "{{bookingId}}", "status"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Payments",
+      "item": [
+        {
+          "name": "Create Payment (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": \"{{bookingId}}\",\n  \"amount\": 550,\n  \"paymentMethod\": \"UPI\",\n  \"status\": \"paid\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/payments", "host": ["{{baseUrl}}"], "path": ["api", "payments"] }
+          }
+        },
+        {
+          "name": "Get Payment for Booking",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/payments/booking/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["api", "payments", "booking", "{{bookingId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Reviews",
+      "item": [
+        {
+          "name": "Create Review (Customer - Completed Booking)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": \"{{bookingId}}\",\n  \"rating\": 5,\n  \"comment\": \"Fantastic work, identified the faulty wire quickly and cleaned up afterwards!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/reviews", "host": ["{{baseUrl}}"], "path": ["api", "reviews"] }
+          }
+        },
+        {
+          "name": "Get Reviews for Service (Public)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/reviews/service/{{serviceId}}", "host": ["{{baseUrl}}"], "path": ["api", "reviews", "service", "{{serviceId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Chats",
+      "item": [
+        {
+          "name": "Send Message / Start Chat",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.data && res.data._id) {",
+                  "    pm.environment.set('chatId', res.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipientId\": \"{{providerId}}\",\n  \"bookingId\": \"{{bookingId}}\",\n  \"message\": \"Hi Bob, will you be bringing your own ladder?\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/chats", "host": ["{{baseUrl}}"], "path": ["api", "chats"] }
+          }
+        },
+        {
+          "name": "Get Chat by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/chats/{{chatId}}", "host": ["{{baseUrl}}"], "path": ["api", "chats", "{{chatId}}"] }
+          }
+        },
+        {
+          "name": "Get All User Chats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/chats", "host": ["{{baseUrl}}"], "path": ["api", "chats"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Geolocation",
+      "item": [
+        {
+          "name": "Nearby Services (Haversine Distance)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/geolocation/nearby?lat=19.1136&lng=72.8697&radius=10", "host": ["{{baseUrl}}"], "path": ["api", "geolocation", "nearby"], "query": [
+              { "key": "lat", "value": "19.1136" },
+              { "key": "lng", "value": "72.8697" },
+              { "key": "radius", "value": "10" }
+            ]}
+          }
+        },
+        {
+          "name": "Search Services by Location & Keyword",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/geolocation/search?location=Mumbai&service=Electrical", "host": ["{{baseUrl}}"], "path": ["api", "geolocation", "search"], "query": [
+              { "key": "location", "value": "Mumbai" },
+              { "key": "service", "value": "Electrical" }
+            ]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Admin",
+      "item": [
+        {
+          "name": "List Providers (Admin Only)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/admin/providers", "host": ["{{baseUrl}}"], "path": ["api", "admin", "providers"] }
+          }
+        },
+        {
+          "name": "Verify Provider (Admin Only)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isVerified\": true\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/verify/{{providerId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "verify", "{{providerId}}"] }
+          }
+        },
+        {
+          "name": "Create Dispute (Customer/Provider)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.data && res.data._id) {",
+                  "    pm.environment.set('disputeId', res.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": \"{{bookingId}}\",\n  \"reason\": \"Billing discrepancy\",\n  \"description\": \"Provider billed for extra wire parts that were not used.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/disputes", "host": ["{{baseUrl}}"], "path": ["api", "admin", "disputes"] }
+          }
+        },
+        {
+          "name": "List Disputes (Admin Only)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/admin/disputes", "host": ["{{baseUrl}}"], "path": ["api", "admin", "disputes"] }
+          }
+        },
+        {
+          "name": "Resolve Dispute (Admin Only)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"resolved\",\n  \"resolution\": \"Provider agreed to refund ₹100 for the extra part.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/disputes/{{disputeId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "disputes", "{{disputeId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Notifications",
+      "item": [
+        {
+          "name": "Send Booking Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"fcm_device_token_sample\",\n  \"title\": \"Booking Confirmed!\",\n  \"body\": \"Your service appointment is scheduled for tomorrow.\",\n  \"data\": {\n    \"bookingId\": \"{{bookingId}}\",\n    \"type\": \"booking_confirmed\"\n  }\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/notifications/send", "host": ["{{baseUrl}}"], "path": ["api", "notifications", "send"] }
+          }
+        }
+      ]
+    }
+  ]
+}
