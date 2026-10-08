@@ -1,13 +1,22 @@
-# LocalServe - Local Service Marketplace Backend
+# LocalServe - Local Service Marketplace Backend & Full-Stack Platform
 
 > **B.Tech CSE Final Year / Capstone Viva Project**  
-> A scalable, modular RESTful backend built with **Node.js, Express.js, MongoDB Atlas, Socket.io, and Firebase Cloud Messaging**.
+> **Student:** Sumit Shingole | **Roll Number:** 150096725081  
+> A scalable, modular RESTful backend and React SPA built with **Node.js, Express.js, MongoDB Atlas, Socket.io, Firebase, and React 19 / Vite**.
+
+---
+
+### 📄 Official Documentation & Submission Assets
+- **Full Academic Project Report (Markdown):** [DOCUMENTATION.md](./DOCUMENTATION.md)
+- **Formatted Microsoft Word Document (.docx):** [LocalServe_Documentation.docx](./LocalServe_Documentation.docx)
+- **Automated Postman Collection:** [LocalServe.postman_collection.json](./postman/LocalServe.postman_collection.json)
+- **Live Frontend Client:** Located in [`frontend/`](./frontend) (React 19, Vite, React Router v7)
 
 ---
 
 ## 1. Project Overview
 
-**LocalServe** is an on-demand hyperlocal service marketplace backend connecting local residents with verified skilled service professionals (electricians, plumbers, carpenters, technicians, cleaners, etc.). 
+**LocalServe** is an on-demand hyperlocal service marketplace connecting local residents with verified skilled service professionals (electricians, plumbers, carpenters, technicians, cleaners, etc.). 
 
 The platform enables:
 - **Customers**: To discover nearby services based on geolocation, book appointments, track real-time booking progress, make simulated payments, chat with service providers, and post ratings & reviews.
